@@ -5,14 +5,33 @@ const http = require("http");
 
 // خلق خادم
 const server = http.createServer(function(req, res) {
-  if (req.url === "/google") {
-    res.writeHead(302, { Location: "https://google.com" });
-    res.end();
-  } else if (req.url === "/hello") {
-    res.end("مرحبا أيها العالم!");
+  // البحث عن مسار الأفلام
+  const path = req.url;
+
+  // إرجاع لائحة الأفلام
+  if (path === "/movies") {
+    res.writeHead(200, {
+      "Content-Type": "text/html; charset=utf-8"
+    });
+
+    res.end(
+      JSON.stringify([
+        {
+          title: "I am legend"
+        },
+        {
+          title: "Me in black"
+        },
+        {
+          title: "The pianist"
+        }
+      ])
+    );
   } else {
-    res.writeHead(404);
-    res.end("Not found");
+    res.writeHead(404, {
+      "Content-Type": "text/html; charset=utf-8"
+    });
+    res.end("العنوان المطلوب غير موجود");
   }
 });
 
